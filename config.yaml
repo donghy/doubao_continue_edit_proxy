@@ -1,0 +1,49 @@
+name: Local Assistant
+version: 1.0.0
+schema: v1
+models:
+  - name: "flash"
+    provider: "openai"
+    model: "doubao-seed-1-6-250615"
+    apiKey: <API-KEY>
+    apiBase: "http://localhost:9957/v1/"
+    roles:
+      - edit
+    promptTemplates:
+      edit: |
+        <|LANG_START|>
+        {{{language}}}
+        <|LANG_END|>
+        <|PREFIX_START|>
+        {{{prefix}}}
+        <|PREFIX_END|>
+        <|CODE_START|>
+        {{{codeToEdit}}}
+        <|CODE_END|>
+        <|SUFFIX_START|>
+        {{{suffix}}}
+        <|SUFFIX_END|>
+        <|REQ_START|>
+        {{{userInput}}}
+        <|REQ_END|>
+    requestOptions:
+      headers:
+        Content-Type: application/json
+  - name: "thinking"
+    provider: "openai"
+    model: "doubao-seed-1-6-250615"
+    apiKey: <API KEY>
+    apiBase: "https://ark.cn-beijing.volces.com/api/v3"
+    roles:
+      - chat
+    requestOptions:
+      headers:
+        Content-Type: application/json
+context:
+  - provider: code
+  - provider: docs
+  - provider: diff
+  - provider: terminal
+  - provider: problems
+  - provider: folder
+  - provider: codebase
